@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 
 function getRawInput() {
-  let dataAsString = fs.readFileSync("q1-input.txt").toString();
+  const dataAsString = fs.readFileSync("q1-input.txt").toString();
   return dataAsString;
 }
 
