@@ -1,16 +1,14 @@
 const fs = require("node:fs");
-// const { type } = require('node:os');
 
 function getRawInput() {
   let dataAsString = fs.readFileSync("q1-input.txt").toString();
   return dataAsString;
 }
 
-// console.log(getRawInput());
 const rawInput = getRawInput();
 let potionQty = 0;
 
-function countPotions(input) {
+function adjustPotionQty(input) {
   switch (input) {
     case "A":
       break;
@@ -24,3 +22,9 @@ function countPotions(input) {
       console.log("There shouldn't be any other letters!");
   }
 }
+
+for (let i = 0; i < rawInput.length; i++) {
+  adjustPotionQty(rawInput[i]);
+}
+
+return potionQty;
