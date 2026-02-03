@@ -24,66 +24,8 @@ function adjustPotionQtyPt1(input) {
   }
 }
 
-// Commented out so it doesn't run for parts 2 & 3
-// for (let i = 0; i < rawInput.length; i++) {
-//   adjustPotionQtyPt1(rawInput[i]);
-// }
-
-// Part 2
-// First answer: Incorrect - low
-// Second answer: Incorrect - low
-// Third answer: Correct!
-function adjustPotionQtyPt2(inputPair) {
-  let pairValue = 0;
-  if (!inputPair.includes("x")) {
-    for (let char of inputPair) {
-      switch (char) {
-        case "A":
-          pairValue += 1;
-          break;
-        case "B":
-          pairValue += 2;
-          break;
-        case "C":
-          pairValue += 4;
-          break;
-        case "D":
-          pairValue += 6;
-          break;
-        default:
-          console.log("Double case: ", char);
-      }
-    }
-  } else {
-    for (let char of inputPair) {
-      switch (char) {
-        case "A":
-          break;
-        case "B":
-          pairValue += 1;
-          break;
-        case "C":
-          pairValue += 3;
-          break;
-        case "D":
-          pairValue += 5;
-          break;
-        case "x":
-          break;
-        default:
-          console.log("Single case: ", char);
-      }
-    }
-  }
-
-  return pairValue;
-}
-
-for (let i = 0; i < rawInput.length; i += 2) {
-  if (i + 1 < rawInput.length) {
-    const pair = rawInput[i] + rawInput[i + 1];
-    potionQty += adjustPotionQtyPt2(pair);
-  }
+for (let i = 0; i < rawInput.length; i++) {
+  adjustPotionQtyPt1(rawInput[i]);
 }
 
 return potionQty;
