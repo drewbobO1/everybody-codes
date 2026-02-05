@@ -1,13 +1,13 @@
 const fs = require("node:fs");
 
 function getRawInput() {
-  const dataAsString = fs.readFileSync("p1-input.txt").toString();
+  const dataAsString = fs.readFileSync("p2-input.txt").toString();
   return dataAsString;
 }
 
 const rawInput = getRawInput();
 
-// Part 1
+// Part 1 (and part 2!)
 // Forgot to convert strings to nums...
 // Otherwise there were only a couple minor errors and I got it fairly quick
 
@@ -17,6 +17,7 @@ const nailHeightsNums = strArrToNumArr(nailHeightsStrs);
 const lowestNail = getLowestNum(nailHeightsNums);
 const requiredStrikes = countTotalDif(nailHeightsNums, lowestNail);
 
+console.log(requiredStrikes);
 return requiredStrikes;
 
 function getLowestNum(nails) {
