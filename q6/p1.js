@@ -47,13 +47,13 @@ function goDownBranch(branchRoot, latestPath) {
     // let
     if (path !== fruit) {
       let branchPath = latestPath + path;
-      console.log(`path: ${path}\nlatestPath: ${branchPath}`);
+      // console.log(`path: ${path}\nlatestPath: ${branchPath}`);
       // console.log("latestPath: ", latestPath);
-      goDownBranch(path, latestPath);
+      goDownBranch(path, branchPath);
     } else {
       // console.log("Fruit? (path): ", path);
       latestPath += path;
-      // console.log("FRUIT path: ", latestPath);
+      console.log("FRUIT path: ", latestPath);
       //   return latestPath;
     }
   }
