@@ -19,54 +19,34 @@ for (let node of inputArr) {
   nodeObj.paths = destinationsArr;
 
   nodeObjMaster[splitNode[0]] = destinationsArr;
-  // nodeObjArr.push(nodeObj);
 }
-
-// console.log(nodeObjMaster);
 
 const absoluteRoot = "RR";
 const fruit = "@";
 
 const allPathsArr = [];
 
-// console.log("root: ", absoluteRoot);
-
 // Loop through immediate branches of absolute root (RR)
 for (let branch of nodeObjMaster[absoluteRoot]) {
   let newPath = absoluteRoot + branch;
-  // console.log("newPath: ", newPath);
   goDownBranch(branch, newPath);
 }
 
-// Very close - Only issue is that the child paths are stacking, instead of being separate.
 function goDownBranch(branchRoot, latestPath) {
-  // console.log("branchRoot: ", branchRoot);
-
-  let latestPathConsistent = latestPath;
-  // console.log("latestPath TOP: ", latestPath);
   for (let path of nodeObjMaster[branchRoot]) {
-    // console.log("path: ", path);
-    // let
     if (path !== fruit) {
       let branchPath = latestPath + path;
-      // console.log(`path: ${path}\nlatestPath: ${branchPath}`);
-      // console.log("latestPath: ", latestPath);
       goDownBranch(path, branchPath);
     } else {
-      // console.log("Fruit? (path): ", path);
       latestPath += path;
-      // console.log("FRUIT path: ", latestPath);
       allPathsArr.push(latestPath);
     }
   }
 }
 
-// console.log("All paths: ", allPathsArr);
-
 function getShortestPath(allPathsArr) {
   let shortestPath = allPathsArr[0];
   for (let path of allPathsArr) {
-    // console.log(`path: ${path}\nlength: ${path.length}`);
     if (path.length < shortestPath.length) {
       shortestPath = path;
     }
