@@ -8,51 +8,107 @@ function getRawInput() {
 const rawInput = getRawInput();
 const inputArr = rawInput.split("\n");
 
-const nodeObjArr = [];
-for (node of inputArr) {
+const nodeObjMaster = {};
+for (let node of inputArr) {
   const nodeObj = {};
   const splitNode = node.split(":");
 
   const destinationsArr = splitNode[1].split(",");
 
   nodeObj.root = splitNode[0];
-  nodeObj.destinations = destinationsArr;
+  nodeObj.paths = destinationsArr;
 
-  nodeObjArr.push(nodeObj);
+  nodeObjMaster[splitNode[0]] = destinationsArr;
+  // nodeObjArr.push(nodeObj);
 }
 
-console.log(nodeObjArr);
+// console.log(nodeObjMaster);
 
-const destinationKey = "@";
+const absoluteRoot = "RR";
+const fruit = "@";
 
-function getSinglePath(nodeObj, allPathsArr, parentPath) {
-  // Have parent path
+// console.log("root: ", absoluteRoot);
 
-  // If destination,
-  // Append destination to parent path
-  // Go to root with destination
-  // If fruit
-  // Append fruit to parent path
-  // Return parent path
+// Loop through immediate branches of absolute root (RR)
+for (let branch of nodeObjMaster[absoluteRoot]) {
+  let newPath = absoluteRoot + branch;
+  // console.log("newPath: ", newPath);
+  goDownBranch(branch, newPath);
+}
 
-  if (nodeObj.destinations) {
-    for (destination of nodeObj.destinations) {
-      if (destination === "@") {
-        parentPath.push(destination);
-        const fullPath = parentPath;
-        parentPath = [nodeObjArr[0].root];
-        console.log("fullPath: ", fullPath);
-        return;
-      } else {
-        parentPath.push(destination);
-        for (pathObj of allPathsArr) {
-          if (pathObj.root === destination) {
-            getSinglePath(pathObj, allPathsArr, parentPath);
-          }
-        }
-      }
+// Very close - Only issue is that the child paths are stacking, instead of being separate.
+function goDownBranch(branchRoot, latestPath) {
+  console.log("branchRoot: ", branchRoot);
+
+  let latestPathConsistent = latestPath;
+  // console.log("latestPath TOP: ", latestPath);
+  for (let path of nodeObjMaster[branchRoot]) {
+    // console.log("path: ", path);
+    // let
+    if (path !== fruit) {
+      let branchPath = latestPath + path;
+      console.log(`path: ${path}\nlatestPath: ${branchPath}`);
+      // console.log("latestPath: ", latestPath);
+      goDownBranch(path, latestPath);
+    } else {
+      // console.log("Fruit? (path): ", path);
+      latestPath += path;
+      // console.log("FRUIT path: ", latestPath);
+      //   return latestPath;
     }
   }
 }
 
-getSinglePath(nodeObjArr[0], nodeObjArr, [nodeObjArr[0].root]);
+// =========
+
+// for (let rootPath of absoluteRoot.paths) {
+//   let solutionPath = rootPath;
+//   console.log("solutionPath: ", solutionPath);
+//   for (let branch of nodeObjArr) {
+//     if (branch.root === rootPath) {
+//       for (let path of branch.paths) {
+//         solutionPath += path;
+//       }
+//       console.log("solutionPath: ", solutionPath);
+
+//       console.log("branch: ", branch);
+//       if (branch.paths.includes(fruit)) {
+//         console.log(branch);
+//       } else {
+//       }
+//     }
+//   }
+//   // console.log("path: ", path);
+// }
+
+// function getSinglePath(nodeObj, allPathsArr, parentPath) {
+//   // Have parent path
+
+//   // If destination,
+//   // Append destination to parent path
+//   // Go to root with destination
+//   // If fruit
+//   // Append fruit to parent path
+//   // Return parent path
+
+//   if (nodeObj.destinations) {
+//     for (let destination of nodeObj.destinations) {
+//       if (destination === "@") {
+//         parentPath.push(destination);
+//         const fullPath = parentPath;
+//         parentPath = [nodeObjArr[0].root];
+//         console.log("fullPath: ", fullPath);
+//         return;
+//       } else {
+//         parentPath.push(destination);
+//         for (pathObj of allPathsArr) {
+//           if (pathObj.root === destination) {
+//             getSinglePath(pathObj, allPathsArr, parentPath);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// getSinglePath(nodeObjArr[0], nodeObjArr, [nodeObjArr[0].root]);
