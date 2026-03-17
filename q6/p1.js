@@ -28,15 +28,23 @@ const allPathsArr = [];
 
 // Loop through immediate branches of absolute root (RR)
 for (let branch of nodeObjMaster[absoluteRoot]) {
+  // console.log("Root branches: ", branch);
   let newPath = absoluteRoot + branch;
   goDownBranch(branch, newPath);
 }
 
 function goDownBranch(branchRoot, latestPath) {
+  // console.log(`nodeObjMaster[branchRoot]: ${nodeObjMaster[branchRoot]}`);
+  if (undefined === nodeObjMaster[branchRoot]) {
+    allPathsArr.push(latestPath);
+    return;
+  }
   for (let path of nodeObjMaster[branchRoot]) {
+    // console.log("path: ", path);
     if (path !== fruit) {
-      let branchPath = latestPath + path;
-      goDownBranch(path, branchPath);
+      // console.log("HI");
+      let updatedPathHistory = latestPath + path;
+      goDownBranch(path, updatedPathHistory);
     } else {
       latestPath += path;
       allPathsArr.push(latestPath);
@@ -47,6 +55,7 @@ function goDownBranch(branchRoot, latestPath) {
 function getShortestPath(allPathsArr) {
   let shortestPath = allPathsArr[0];
   for (let path of allPathsArr) {
+    // console.log(`path: ${path}\nlength: ${path.length}`);
     if (path.length < shortestPath.length) {
       shortestPath = path;
     }
@@ -54,4 +63,5 @@ function getShortestPath(allPathsArr) {
   return shortestPath;
 }
 
+// console.log("allPathsArr: ", allPathsArr);
 console.log("Shortest path: ", getShortestPath(allPathsArr));
