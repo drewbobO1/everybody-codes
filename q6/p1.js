@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 
 function getRawInput() {
-  const dataAsString = fs.readFileSync("p1-test-input.txt").toString();
+  const dataAsString = fs.readFileSync("p1-input.txt").toString();
   return dataAsString;
 }
 
@@ -28,21 +28,17 @@ const allPathsArr = [];
 
 // Loop through immediate branches of absolute root (RR)
 for (let branch of nodeObjMaster[absoluteRoot]) {
-  // console.log("Root branches: ", branch);
   let newPath = absoluteRoot + branch;
   goDownBranch(branch, newPath);
 }
 
 function goDownBranch(branchRoot, latestPath) {
-  // console.log(`nodeObjMaster[branchRoot]: ${nodeObjMaster[branchRoot]}`);
   if (undefined === nodeObjMaster[branchRoot]) {
     allPathsArr.push(latestPath);
     return;
   }
   for (let path of nodeObjMaster[branchRoot]) {
-    // console.log("path: ", path);
     if (path !== fruit) {
-      // console.log("HI");
       let updatedPathHistory = latestPath + path;
       goDownBranch(path, updatedPathHistory);
     } else {
@@ -52,16 +48,25 @@ function goDownBranch(branchRoot, latestPath) {
   }
 }
 
-function getShortestPath(allPathsArr) {
-  let shortestPath = allPathsArr[0];
+function getUniquePath(allPathsArr) {
+  const pathLengthObj = {};
+
   for (let path of allPathsArr) {
-    // console.log(`path: ${path}\nlength: ${path.length}`);
-    if (path.length < shortestPath.length) {
-      shortestPath = path;
+    if (pathLengthObj[path.length]) {
+      pathLengthObj[path.length].quantity += 1;
+      pathLengthObj[path.length].pathsArr.push(path);
+    } else {
+      pathLengthObj[path.length] = { quantity: 1, pathsArr: [path] };
     }
   }
-  return shortestPath;
+
+  for (let key in pathLengthObj) {
+    if (pathLengthObj[key].quantity === 1) {
+      return pathLengthObj[key].pathsArr[0];
+    }
+  }
+
+  return "";
 }
 
-// console.log("allPathsArr: ", allPathsArr);
-console.log("Shortest path: ", getShortestPath(allPathsArr));
+console.log("Unique path: ", getUniquePath(allPathsArr));
